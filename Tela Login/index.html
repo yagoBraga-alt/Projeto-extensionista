@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Sistema de Biscoitos - Login</title>
     <link rel="stylesheet" href="/Tela Login/css/styles.css">
 </head>
-<html>
 <body>
     <header>
         <div class="logo">APAE</div>
@@ -19,14 +18,17 @@
             <img src="/Tela Login/img/logoBiscoitoDivertido.png" alt="Logo do biscoito">
         </div>
 
-        <div class="title">Olá!</div>
-        <div class="subtitle">Faça login como administrador para iniciar a sessão</div>
+        <div class="title">Bem-vindo!</div>
+        <div class="subtitle">Escolha como deseja fazer o login</div>
 
-        <form action="/Menu Principal/index.html" method="get">
-            <input type="text" placeholder="Usuário" required>
-            <input type="password" placeholder="Senha" required>
-            <button type="submit">Entrar</button>
-        </form>
+        <div class="login-options">
+            <a href="/Tela Login ADM/index.html">
+                <button type="button">Entrar como Administrador</button>
+            </a>
+            <a href="/Menu Principal/index.html">
+                <button type="button">Entrar como Usuário</button>
+            </a>
+        </div>
     </div>
 </body>
 </html>
