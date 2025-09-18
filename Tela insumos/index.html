@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerenciar Insumos</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+  <header>
+    <div class="logo">APAE</div>
+    <h1>Gerenciar Insumos</h1>
+    <div class="accessibility">☺︎</div>
+  </header>
+
+  <div class="content">
+    <div class="mascot">
+      <img src="/Tela insumos/img/logoBiscoitoDivertido.png" alt="Logo do biscoito">
+    </div>
+
+    <div class="title">Adicione insumos</div>
+    <div class="subtitle">Gerencie os ingredientes necessários para a produção</div>
+
+    <!-- Botão de adicionar -->
+    <div class="add-container">
+      <button id="addButton">+</button>
+    </div>
+
+    <!-- Formulário escondido -->
+    <div id="formContainer" class="form hidden">
+      <h2>Novo Insumo</h2>
+      <form id="insumoForm">
+        <input type="file" id="imagem" accept="image/*" required>
+        <input type="text" id="nome" placeholder="Nome do insumo" required>
+        <button type="submit">Salvar</button>
+      </form>
+    </div>
+
+    <!-- Lista de insumos -->
+    <div id="insumosList" class="insumos-list"></div>
+
+    <div class="back">
+      <button onclick="window.location.href='../Menu Principal ADM/index.html'">Voltar</button>
+    </div>
+  </div>
+
+  <script>
+    const addButton = document.getElementById("addButton");
+    const formContainer = document.getElementById("formContainer");
+    const insumoForm = document.getElementById("insumoForm");
+    const insumosList = document.getElementById("insumosList");
+
+    // Mostrar formulário
+    addButton.addEventListener("click", () => {
+      formContainer.classList.toggle("hidden");
+    });
+
+    // Salvar insumo
+    insumoForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const nome = document.getElementById("nome").value;
+      const imagemInput = document.getElementById("imagem");
+      const imagem = imagemInput.files[0];
+
+      if (nome && imagem) {
+        const reader = new FileReader();
+        reader.onload = function (event) {
+          const item = document.createElement("div");
+          item.classList.add("insumo-item");
+
+          item.innerHTML = `
+            <img src="${event.target.result}" alt="${nome}">
+            <p>${nome}</p>
+          `;
+
+          insumosList.appendChild(item);
+        };
+        reader.readAsDataURL(imagem);
+      }
+
+      insumoForm.reset();
+      formContainer.classList.add("hidden");
+    });
+  </script>
+</body>
+
+</html>
