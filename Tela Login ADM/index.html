@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="/Tela Login ADM/css/styles.css">
+    <title>Login Administrador</title>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
-<html>
+
 <body>
     <header>
         <div class="logo">APAE</div>
@@ -16,17 +17,33 @@
 
     <div class="content">
         <div class="mascot">
-            <img src="/Tela Login ADM/img/logoBiscoitoDivertido.png" alt="Logo do biscoito">
+            <img src="img/logoBiscoitoDivertido.png" alt="Logo do biscoito">
         </div>
 
         <div class="title">Olá!</div>
         <div class="subtitle">Faça login como administrador para iniciar a sessão</div>
 
-        <form action="/Menu Principal ADM/index.html" method="get">
-            <input type="text" placeholder="Usuário" required>
-            <input type="password" placeholder="Senha" required>
+        <form onsubmit="return validarLogin()">
+            <input type="text" id="usuario" placeholder="Usuário" required>
+            <input type="password" id="senha" placeholder="Senha" required>
             <button type="submit">Entrar</button>
         </form>
     </div>
+
+    <script>
+        function validarLogin() {
+            const usuario = document.getElementById("usuario").value;
+            const senha = document.getElementById("senha").value;
+
+            if (usuario === "admin" && senha === "1234") {
+                window.location.href = "../Menu Principal ADM/index.html";
+                return false;
+            } else {
+                alert("Usuário ou senha inválidos!");
+                return false;
+            }
+        }
+    </script>
 </body>
+
 </html>
