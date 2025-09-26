@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editar Insumo</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header>
+    <div class="logo">APAE</div>
+    <h1 id="insumo-title">Editar Insumo</h1>
+    <div class="accessibility">☺︎</div>
+  </header>
+  <main>
+    <div class="mascot">
+      <img src="../img/logoBiscoitoDivertido.png" alt="Logo do biscoito">
+    </div>
+    <div class="subtitle">Gerencie os ingredientes necessários para a produção</div>
+    <div id="insumo-destaque" class="insumo-destaque"></div>
+    <form id="form-editar-insumo" class="form">
+      <div id="campos-novo-insumo" style="display:none;">
+        <label for="nome">Nome do Insumo</label>
+        <input type="text" id="nome" name="nome" required>
+        <label for="imagem">Imagem do Insumo</label>
+        <input type="file" id="imagem" name="imagem" accept="image/*" required>
+        <div id="preview-imagem"></div>
+      </div>
+      <label for="quantidade">Quantidade</label>
+      <input type="number" id="quantidade" name="quantidade" min="0" required>
+      <label for="unidade">Unidade de Medida</label>
+      <input type="text" id="unidade" name="unidade" required>
+      <label for="validade">Data de Validade</label>
+      <input type="date" id="validade" name="validade" required>
+      <button type="submit">Salvar</button>
+      <button type="button" id="excluirBtn" style="display:none;background:#d9534f;color:#fff;margin-top:10px;">Excluir</button>
+    </form>
+    <a href="/Tela insumos/index.html" class="back-btn" role="button">Voltar</a>
+  </main>
+  <script>
+    const imagensInsumos = {
+      "Farinha": "../img/farinha.png",
+      "Ovo": "../img/ovo.png",
+      "Leite": "../img/garrafa-de-leite.png",
+      "Fermento": "../img/fermento.png",
+      "Baunilha": "../img/baunilha.png",
+      "Açúcar": "../img/acucar.png",
+      "Manteiga": "../img/manteiga.png",
+      "Chocolate": "../img/chocolate.png"
+    };
+    const params = new URLSearchParams(window.location.search);
+    const nome = params.get('nome');
+    const novo = params.get('novo');
+    const title = document.getElementById('insumo-title');
+    const destaque = document.getElementById('insumo-destaque');
+    const camposNovo = document.getElementById('campos-novo-insumo');
+    const nomeInput = document.getElementById('nome');
+    const imagemInput = document.getElementById('imagem');
+    const previewImagem = document.getElementById('preview-imagem');
+    const excluirBtn = document.getElementById('excluirBtn');
+    // Novo insumo
+    if (novo) {
+      title.textContent = 'Adicionar Novo Insumo';
+      camposNovo.style.display = 'block';
+      destaque.innerHTML = `<span>Novo Insumo</span>`;
+      imagemInput.addEventListener('change', function() {
+        if (imagemInput.files && imagemInput.files[0]) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            previewImagem.innerHTML = `<img src="${e.target.result}" alt="Prévia da imagem" style="width:80px;height:80px;border-radius:16px;margin-top:8px;">`;
+            if (nomeInput.value) {
+              destaque.innerHTML = `<img src='${e.target.result}' alt='${nomeInput.value}'><span>${nomeInput.value}</span>`;
+            }
+          };
+          reader.readAsDataURL(imagemInput.files[0]);
+        }
+      });
+      nomeInput.addEventListener('input', function() {
+        let imgTag = '';
+        if (imagemInput.files && imagemInput.files[0]) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            imgTag = `<img src='${e.target.result}' alt='${nomeInput.value}'>`;
+            destaque.innerHTML = `${imgTag}<span>${nomeInput.value}</span>`;
+          };
+          reader.readAsDataURL(imagemInput.files[0]);
+        } else {
+          destaque.innerHTML = `<span>${nomeInput.value}</span>`;
+        }
+      });
+      excluirBtn.style.display = 'none';
+    } else if (nome && imagensInsumos[nome]) {
+      title.textContent = `Editar ${nome}`;
+      destaque.innerHTML = `<img src="${imagensInsumos[nome]}" alt="${nome}"><span>${nome}</span>`;
+      excluirBtn.style.display = 'none';
+    } else if (nome) {
+      // Insumo do usuário
+      const insumosUser = JSON.parse(localStorage.getItem('insumosUser')) || [];
+      const insumo = insumosUser.find(i => i.nome === nome);
+      if (insumo) {
+        destaque.innerHTML = `<img src="${insumo.imagem}" alt="${insumo.nome}"><span>${insumo.nome}</span>`;
+        document.getElementById('quantidade').value = insumo.quantidade;
+        document.getElementById('unidade').value = insumo.unidade;
+        document.getElementById('validade').value = insumo.validade;
+        excluirBtn.style.display = 'block';
+        excluirBtn.onclick = function() {
+          if (confirm('Tem certeza que deseja excluir este insumo?')) {
+            const novos = insumosUser.filter(i => i.nome !== nome);
+            localStorage.setItem('insumosUser', JSON.stringify(novos));
+            alert('Insumo excluído!');
+            window.location.href = '/Tela insumos/index.html';
+          }
+        };
+      } else {
+        destaque.innerHTML = `<span>${nome}</span>`;
+        excluirBtn.style.display = 'none';
+      }
+    }
+    // Submit do formulário
+    const form = document.getElementById('form-editar-insumo');
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      if (novo) {
+        const nome = nomeInput.value;
+        const unidade = document.getElementById('unidade').value;
+        const quantidade = document.getElementById('quantidade').value;
+        const validade = document.getElementById('validade').value;
+        const imagem = imagemInput.files[0];
+        if (nome && unidade && quantidade && validade && imagem) {
+          const reader = new FileReader();
+          reader.onload = function(event) {
+            const novoInsumo = {
+              nome,
+              unidade,
+              quantidade,
+              validade,
+              imagem: event.target.result
+            };
+            let insumos = JSON.parse(localStorage.getItem('insumosUser')) || [];
+            insumos.push(novoInsumo);
+            localStorage.setItem('insumosUser', JSON.stringify(insumos));
+            alert('Insumo cadastrado com sucesso!');
+            window.location.href = '/Tela insumos/index.html';
+          };
+          reader.readAsDataURL(imagem);
+        }
+      } else if (nome && !imagensInsumos[nome]) {
+        // Edita insumo do usuário
+        const unidade = document.getElementById('unidade').value;
+        const quantidade = document.getElementById('quantidade').value;
+        const validade = document.getElementById('validade').value;
+        let insumos = JSON.parse(localStorage.getItem('insumosUser')) || [];
+        insumos = insumos.map(i => {
+          if (i.nome === nome) {
+            return { ...i, unidade, quantidade, validade };
+          }
+          return i;
+        });
+        localStorage.setItem('insumosUser', JSON.stringify(insumos));
+        alert('Informações salvas com sucesso!');
+        window.location.href = '/Tela insumos/index.html';
+      } else {
+        alert('Informações salvas com sucesso!');
+        window.location.href = '/Tela insumos/index.html';
+      }
+    });
+  </script>
+</body>
+</html>

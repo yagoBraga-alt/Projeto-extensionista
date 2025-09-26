@@ -1,90 +1,87 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gerenciar Insumos</title>
   <link rel="stylesheet" href="css/styles.css">
 </head>
-
 <body>
   <header>
     <div class="logo">APAE</div>
     <h1>Gerenciar Insumos</h1>
     <div class="accessibility">☺︎</div>
   </header>
-
   <div class="content">
     <div class="mascot">
       <img src="/img/logoBiscoitoDivertido.png" alt="Logo do biscoito">
     </div>
-
     <div class="title">Adicione insumos</div>
     <div class="subtitle">Gerencie os ingredientes necessários para a produção</div>
-
-    <!-- Botão de adicionar -->
-    <div class="add-container">
-      <button id="addButton">+</button>
+    <div class="ingredientes-container" id="ingredientes-container">
+      <!-- Insumos serão adicionados aqui via JavaScript -->
     </div>
-
-    <!-- Formulário escondido -->
-    <div id="formContainer" class="form hidden">
-      <h2>Novo Insumo</h2>
-      <form id="insumoForm">
-        <input type="file" id="imagem" accept="image/*" required>
-        <input type="text" id="nome" placeholder="Nome do insumo" required>
-        <button type="submit">Salvar</button>
-      </form>
+    <div class="add-float">
+      <button id="addButton" aria-label="Adicionar novo insumo">+</button>
     </div>
-
-    <!-- Lista de insumos -->
-    <div id="insumosList" class="insumos-list"></div>
-
     <div class="back">
       <button onclick="window.location.href='../Menu Principal ADM/index.html'">Voltar</button>
     </div>
   </div>
-
   <script>
-    const addButton = document.getElementById("addButton");
-    const formContainer = document.getElementById("formContainer");
-    const insumoForm = document.getElementById("insumoForm");
-    const insumosList = document.getElementById("insumosList");
-
-    // Mostrar formulário
-    addButton.addEventListener("click", () => {
-      formContainer.classList.toggle("hidden");
+    // Insumos fixos
+    const insumosFixos = [
+      { nome: "Farinha", imagem: "/img/farinha.png" },
+      { nome: "Ovo", imagem: "/img/ovo.png" },
+      { nome: "Leite", imagem: "/img/garrafa-de-leite.png" },
+      { nome: "Fermento", imagem: "/img/fermento.png" },
+      { nome: "Baunilha", imagem: "/img/baunilha.png" },
+      { nome: "Açúcar", imagem: "/img/acucar.png" },
+      { nome: "Manteiga", imagem: "/img/manteiga.png" },
+      { nome: "Chocolate", imagem: "/img/chocolate.png" }
+    ];
+    const container = document.getElementById('ingredientes-container');
+    // Renderiza insumos fixos
+    insumosFixos.forEach(insumo => {
+      const a = document.createElement('a');
+      a.className = 'ingrediente-btn';
+      a.href = `/Tela Editar Insumos/index.html?nome=${encodeURIComponent(insumo.nome)}`;
+      a.innerHTML = `<img src="${insumo.imagem}" alt="${insumo.nome}" class="icon-ingrediente"><span>${insumo.nome}</span>`;
+      container.appendChild(a);
     });
-
-    // Salvar insumo
-    insumoForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-
-      const nome = document.getElementById("nome").value;
-      const imagemInput = document.getElementById("imagem");
-      const imagem = imagemInput.files[0];
-
-      if (nome && imagem) {
-        const reader = new FileReader();
-        reader.onload = function (event) {
-          const item = document.createElement("div");
-          item.classList.add("insumo-item");
-
-          item.innerHTML = `
-            <img src="${event.target.result}" alt="${nome}">
-            <p>${nome}</p>
-          `;
-
-          insumosList.appendChild(item);
-        };
-        reader.readAsDataURL(imagem);
-      }
-
-      insumoForm.reset();
-      formContainer.classList.add("hidden");
-    });
+    // Renderiza insumos do usuário
+    function renderInsumoUser(insumo) {
+      const div = document.createElement('div');
+      div.className = 'ingrediente-btn';
+      div.style.position = 'relative';
+      div.innerHTML = `
+        <img src="${insumo.imagem}" alt="${insumo.nome}" class="icon-ingrediente">
+        <span>${insumo.nome}</span>
+        <button class="edit-btn" aria-label="Editar ${insumo.nome}" style="position:absolute;top:8px;right:40px;">✏️</button>
+        <button class="delete-btn" aria-label="Excluir ${insumo.nome}" style="position:absolute;top:8px;right:8px;">🗑️</button>
+      `;
+      // Editar insumo
+      div.querySelector('.edit-btn').onclick = function(e) {
+        e.stopPropagation();
+        window.location.href = `/Tela Editar Insumos/index.html?nome=${encodeURIComponent(insumo.nome)}`;
+      };
+      // Excluir insumo
+      div.querySelector('.delete-btn').onclick = function(e) {
+        e.stopPropagation();
+        let insumos = JSON.parse(localStorage.getItem('insumosUser')) || [];
+        insumos = insumos.filter(i => i.nome !== insumo.nome);
+        localStorage.setItem('insumosUser', JSON.stringify(insumos));
+        div.remove();
+      };
+      container.appendChild(div);
+    }
+    // Carrega insumos do usuário
+    const insumosUser = JSON.parse(localStorage.getItem('insumosUser')) || [];
+    insumosUser.forEach(renderInsumoUser);
+    // Botão de adicionar novo insumo
+    document.getElementById('addButton').onclick = function() {
+      window.location.href = '/Tela Editar Insumos/index.html?novo=1';
+    };
   </script>
 </body>
-
 </html>
