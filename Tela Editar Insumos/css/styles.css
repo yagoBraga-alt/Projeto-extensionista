@@ -60,6 +60,7 @@ header h1 {
   color: #555;
   margin-bottom: 20px;
 }
+
 .ingredientes-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -246,5 +247,74 @@ header h1 {
     width: 60px;
     height: 60px;
     font-size: 16px;
+  }
+}
+
+.historico-card {
+  position: absolute;
+  left: 20px;
+  top: 160px;
+  width: 300px;
+  background: #f7f7fb;
+  border: 1.5px solid #1e3fa9;
+  border-radius: 14px;
+  box-shadow: 0 4px 16px rgba(30,63,169,0.08);
+  padding: 18px 18px 14px 18px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 10;
+}
+
+.info-atual-insumo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.info-atual-insumo img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  border-radius: 12px;
+  background: #fffce0;
+  margin-bottom: 8px;
+}
+
+.info-atual-insumo .nome {
+  font-size: 19px;
+  color: #1552c2;
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+
+.info-atual-insumo .soma {
+  font-size: 15px;
+  color: #333;
+}
+
+#historico-lista {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+#historico-lista li {
+  background: #fff;
+  border-radius: 7px;
+  margin-bottom: 8px;
+  padding: 7px 11px;
+  font-size: 16px;
+  box-shadow: 0 1px 5px rgba(30,63,169,0.03);
+}
+
+@media (max-width: 500px) {
+  .historico-card {
+    position: static;
+    width: 97vw;
+    margin-bottom: 20px;
   }
 }
