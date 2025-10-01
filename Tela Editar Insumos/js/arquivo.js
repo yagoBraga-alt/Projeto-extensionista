@@ -24,17 +24,16 @@ document.addEventListener('DOMContentLoaded', function() {
   const validadeInput = document.getElementById('validade');
 
   const limparBtn = document.getElementById('limparHistoricoBtn');
-    if (limparBtn) {
+  if (limparBtn) {
     limparBtn.addEventListener('click', function() {
-        if (confirm('Deseja realmente limpar o histórico deste insumo?')) {
+      if (confirm('Deseja realmente limpar o histórico deste insumo?')) {
         const key = `historico_${nome}`;
         localStorage.removeItem(key);
         mostrarHistorico(nome);
         alert('Histórico limpo com sucesso!');
-        }
+      }
     });
-    }
-
+  }
 
   function mostrarHistorico(nomeInsumo) {
     const key = `historico_${nomeInsumo}`;
@@ -54,10 +53,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const ul = document.getElementById('historico-lista');
     ul.innerHTML = entradas.map(e =>
-    `<li>${e.quantidade} ${e.unidade}
-      - salvo em: ${e.dataRegistro || 'N/A'}</li>`
+      `<li>${e.quantidade} ${e.unidade} - salvo em: ${e.dataRegistro || 'N/A'} validade: ${e.validade || 'N/A'}</li>`
     ).join('');
-
   }
 
   function salvarInsumo() {
@@ -75,7 +72,6 @@ document.addEventListener('DOMContentLoaded', function() {
       return;
     }
 
-    // Data e hora atual no formato legível
     const dataRegistro = new Date().toLocaleString('pt-BR', {
       day: '2-digit', month: '2-digit', year: 'numeric',
       hour: '2-digit', minute: '2-digit', second: '2-digit'
@@ -111,10 +107,46 @@ document.addEventListener('DOMContentLoaded', function() {
     alert('Insumo fixo inválido ou não especificado.');
   }
 
-  if (salvarBtn) {
-    salvarBtn.addEventListener('click', function(e) {
-      e.preventDefault();
+  // Modal e validação admin:
+
+  const modal = document.getElementById('adminLoginModal');
+  const closeModalBtn = document.getElementById('closeModal');
+  const adminLoginForm = document.getElementById('adminLoginForm');
+  const loginError = document.getElementById('loginError');
+
+  const adminCredentials = {
+    username: "admin",
+    password: "senha123"
+  };
+
+  salvarBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    loginError.style.display = 'none';
+    modal.style.display = 'flex';
+    document.getElementById('adminUser').focus();
+  });
+
+  closeModalBtn.addEventListener('click', function() {
+    modal.style.display = 'none';
+  });
+
+  window.addEventListener('click', function(event) {
+    if (event.target === modal) {
+      modal.style.display = 'none';
+    }
+  });
+
+  adminLoginForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const user = document.getElementById('adminUser').value.trim();
+    const pass = document.getElementById('adminPass').value;
+
+    if (user === adminCredentials.username && pass === adminCredentials.password) {
+      modal.style.display = 'none';
       salvarInsumo();
-    });
-  }
+    } else {
+      loginError.style.display = 'block';
+    }
+  });
+
 });

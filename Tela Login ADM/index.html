@@ -21,7 +21,7 @@
         </div>
 
         <div class="title">Olá!</div>
-        <div class="subtitle">Faça login como administrador para iniciar a sessão</div>
+        <div class="subtitle">Faça login como administrador para executar a ação</div>
 
         <form onsubmit="return validarLogin()">
             <input type="text" id="usuario" placeholder="Usuário" required>
@@ -32,17 +32,19 @@
 
     <script>
         function validarLogin() {
-            const usuario = document.getElementById("usuario").value;
-            const senha = document.getElementById("senha").value;
+            const usuario = document.getElementById('usuario').value;
+            const senha = document.getElementById('senha').value;
 
-            if (usuario === "admin" && senha === "1234") {
-                window.location.href = "../Menu Principal ADM/index.html";
+            if (usuario === 'admin' && senha === '1234') {
+                localStorage.setItem('loggedIn', 'true'); // grava login válido
+                window.location.href = '../Menu Principal ADM/index.html';
                 return false;
             } else {
-                alert("Usuário ou senha inválidos!");
+                alert('Usuário ou senha inválidos!');
                 return false;
             }
         }
+
     </script>
 </body>
 
