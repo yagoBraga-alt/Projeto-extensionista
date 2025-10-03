@@ -355,3 +355,10 @@ header h1 {
 .close:focus {
   color: #d9534f;
 }
+
+#adminLoginForm{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 10px;;
+}
