@@ -99,3 +99,4 @@ body {
     button[type="submit"]:hover {
       background-color: #16317a;
     }
+    .erro { color: red; margin-bottom: 10px; }

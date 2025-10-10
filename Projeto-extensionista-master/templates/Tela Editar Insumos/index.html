@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editar Insumo</title>
+  <link rel="stylesheet" href="../../static/Tela Editar Insumos/styles.css">
+</head>
+
+<body>
+  <header>
+    <div class="logo">APAE</div>
+    <h1 id="insumo-title">Editar Insumo</h1>
+    <div class="accessibility">☺︎</div>
+  </header>
+  <main>
+    <div class="mascot">
+      <img src="../../static/img/logoBiscoitoDivertido.png" alt="Logo do biscoito">
+    </div>
+    <div class="subtitle">Gerencie os ingredientes necessários para a produção</div>
+    <div id="insumo-destaque" class="insumo-destaque"></div>
+    <div id="historico-card" class="historico-card">
+      <div id="info-atual-insumo" class="info-atual-insumo"></div>
+      <h3>Histórico</h3>
+      <ul id="historico-lista"></ul>
+      <button id="limparHistoricoBtn"
+        style="margin-top:10px; background:#d9534f; color:#fff; border:none; padding:8px 12px; border-radius:6px; cursor:pointer;">
+        Limpar Histórico
+      </button>
+    </div>
+
+    <form id="form-editar-insumo" class="form" method="POST" action="{{ url_for('editar_insumos_page') }}">
+      <div id="campos-novo-insumo" style="display:none;">
+        <label for="nome">Nome do Insumo</label>
+        <div id="preview-imagem"></div>
+      </div>
+
+      <input type="hidden" id="nome" name="nome"> <!-- campo obrigatório para enviar o nome -->
+
+      <label for="quantidade">Peso Líquido (g)</label>
+      <input type="number" id="quantidade" name="quantidade" min="0" required>
+
+      <label for="descricao">Descrição do Produto</label>
+      <input type="text" id="descricao" name="descricao" required>
+
+      <label for="unidadeMedida">Unidade de Medida</label>
+      <input type="text" id="unidadeMedida" name="unidadeMedida" required>
+
+      <label for="fornecedor">Fornecedor</label>
+      <input type="text" id="fornecedor" name="fornecedor" required>
+
+      <label for="precoCusto">Preço de Custo Unitário</label>
+      <input type="number" id="precoCusto" name="precoCusto" min="0" step="0.01" required>
+
+      <label for="validade">Data de Validade</label>
+      <input type="date" id="validade" name="validade" required>
+
+      <fieldset style="border: 1px solid #1e3fa9; padding: 10px; border-radius: 8px; margin-top: 12px;">
+        <legend>Nota Fiscal</legend>
+
+        <label for="idNota">ID da Nota</label>
+        <input type="text" id="idNota" name="idNota" required>
+
+        <label for="dataNota">Data da Nota</label>
+        <input type="date" id="dataNota" name="dataNota" required>
+
+        <label for="valorTotalNota">Valor Total da Nota</label>
+        <input type="number" id="valorTotalNota" name="valorTotalNota" min="0" step="0.01" required>
+        
+      </fieldset>
+
+      <label for="observacoes">Observações</label>
+      <textarea id="observacoes" name="observacoes" rows="3" style="resize: vertical;"></textarea>
+
+      <button type="submit" id="salvarBtn">Salvar</button>
+      <button type="button" id="excluirBtn"
+        style="display:none;background:#d9534f;color:#fff;margin-top:10px;">Excluir</button>
+    </form>
+
+
+    <a onclick="window.location.href='{{ url_for('insumos_page') }}'" class="back-btn" role="button">Voltar</a>
+  </main>
+
+  <script src="/javascript"></script>
+
+</body>
+
+</html>

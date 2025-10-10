@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu Principal - Administrador</title>
+  <link rel="stylesheet" href="../../static/Menu Principal ADM/styles.css">
+</head>
+
+<body>
+  <header>
+    <div class="logo">APAE</div>
+    <h1>Menu Principal - Administrador</h1>
+    <div class="accessibility">☺︎</div>
+  </header>
+
+  <div class="content">
+    <div class="mascot">
+      <img src="../../static/img/logoBiscoitoDivertido.png" alt="Logo do biscoito">
+    </div>
+
+    <div class="title">Vamos começar!</div>
+    <div class="subtitle">Clique na opção desejada</div>
+
+    <div class="menu">
+
+      <button onclick="window.location.href='{{ url_for('insumos_page') }}'">
+        <img src="../../static/img/suprimentos (1).png" alt="Insumos">
+        Insumos
+      </button>
+      <button onclick="window.location.href='{{ url_for('receitas_page') }}'">
+        <img src="../../static/img/livro-de-receitas colorido.png" alt="Receitas">
+        Receitas
+      </button>
+      <button><img src="../../static/img/chefe-de-cozinha colorida.png" alt="Produção">Produção</button>
+      <button><img src="../../static/img/mao colorida.png" alt="Venda">Venda</button>
+      <button><img src="../../static/img/relatorio.png" alt="Relatórios">Gerar Relatórios</button>
+      <button><img src="../../static/img/logoBiscoitoDivertido.png" alt="Iniciar Sessão">Iniciar Sessão</button>
+    </div>
+
+    <div class="back">
+      <button onclick="window.location.href='{{ url_for('login_page') }}'">Voltar</button>
+    </div>
+  </div>
+</body>
+
+</html>

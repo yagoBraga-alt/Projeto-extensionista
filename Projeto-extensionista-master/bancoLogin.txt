@@ -1,0 +1,30 @@
+create database biscoito;
+
+use biscoito;
+
+select * from login; 
+select * from insumos;
+TRUNCATE TABLE insumos;
+
+create table login(
+	id int auto_increment not null,
+	usuario varchar(40),
+	senha varchar(255),
+	primary key(id)
+);
+
+create table insumos(
+	id int auto_increment not null,
+	nome varchar(40),
+	quantidade decimal not null,
+	unidade char(4),
+	dataEntrada date,
+	validade date,
+	primary key(id)
+);
+
+insert into login values(1 ,'usuario', '1234');
+
+show tables; 
+SELECT CONCAT('*', usuario, '*'), CONCAT('*', senha, '*') FROM login;
+

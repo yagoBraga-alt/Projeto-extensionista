@@ -1,0 +1,16 @@
+Projeto extensionista/
+│
+├── app.py
+├── static/
+│   ├── Menu Principal ADM/
+│   │   ├── img/
+│   │   └── styles.css
+│   ├── Tela Login ADM/
+│   └── ... (outras pastas)
+│
+├── templates/
+│   ├── Menu Principal ADM/
+│   │   └── index.html
+│   ├── Tela Login ADM/
+│   │   └── index.html
+│   └── ... (outras telas)

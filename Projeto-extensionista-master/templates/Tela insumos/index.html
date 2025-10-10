@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gerenciar Insumos</title>
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="../../static/Tela insumos/styles.css">
 </head>
 <body>
   <header>
@@ -14,7 +14,7 @@
   </header>
   <div class="content">
     <div class="mascot">
-      <img src="/img/logoBiscoitoDivertido.png" alt="Logo do biscoito">
+      <img src="../../static/img/logoBiscoitoDivertido.png" alt="Logo do biscoito">
     </div>
     <div class="title">Adicione insumos</div>
     <div class="subtitle">Gerencie os ingredientes necessários para a produção</div>
@@ -22,10 +22,10 @@
       <!-- Insumos serão adicionados aqui via JavaScript -->
     </div>
     <div class="add-float">
-      <button id="" aria-label="Adicionar novo insumo">+</button>
+      <button id="addButton" aria-label="Adicionar novo insumo">+</button>
     </div>
     <div class="back">
-      <button onclick="window.location.href='../Menu Principal ADM/index.html'">Voltar</button>
+      <button onclick="window.location.href='{{ url_for('menu_page') }}'">Voltar</button>
     </div>
   </div>
 
@@ -33,21 +33,21 @@
     
     // Insumos fixos
     const insumosFixos = [
-      { nome: "Farinha", imagem: "/img/farinha.png" },
-      { nome: "Ovo", imagem: "/img/ovo.png" },
-      { nome: "Leite", imagem: "/img/garrafa-de-leite.png" },
-      { nome: "Fermento", imagem: "/img/fermento.png" },
-      { nome: "Baunilha", imagem: "/img/baunilha.png" },
-      { nome: "Açúcar", imagem: "/img/acucar.png" },
-      { nome: "Manteiga", imagem: "/img/manteiga.png" },
-      { nome: "Chocolate", imagem: "/img/chocolate.png" }
+      { nome: "Farinha", imagem: "../../static/img/farinha.png" },
+      { nome: "Ovo", imagem: "../../static/img/ovo.png" },
+      { nome: "Leite", imagem: "../../static/img/garrafa-de-leite.png" },
+      { nome: "Fermento", imagem: "../../static/img/fermento.png" },
+      { nome: "Baunilha", imagem: "../../static/img/baunilha.png" },
+      { nome: "Açúcar", imagem: "../../static/img/acucar.png" },
+      { nome: "Manteiga", imagem: "../../static/img/manteiga.png" },
+      { nome: "Chocolate", imagem: "../../static/img/chocolate.png" }
     ];
     const container = document.getElementById('ingredientes-container');
     // Renderiza insumos fixos
     insumosFixos.forEach(insumo => {
       const a = document.createElement('a');
       a.className = 'ingrediente-btn';
-      a.href = `/Tela Editar Insumos/index.html?nome=${encodeURIComponent(insumo.nome)}`;
+      a.href = `/editar_insumos?nome=${encodeURIComponent(insumo.nome)}`;
       a.innerHTML = `<img src="${insumo.imagem}" alt="${insumo.nome}" class="icon-ingrediente"><span>${insumo.nome}</span>`;
       container.appendChild(a);
     });
@@ -65,7 +65,7 @@
       // Editar insumo
       div.querySelector('.edit-btn').onclick = function(e) {
         e.stopPropagation();
-        window.location.href = `/Tela Editar Insumos/index.html?nome=${encodeURIComponent(insumo.nome)}`;
+        window.location.href = `/editar_insumos?nome=${encodeURIComponent(insumo.nome)}`;
       };
       // Excluir insumo
       div.querySelector('.delete-btn').onclick = function(e) {
@@ -82,7 +82,7 @@
     insumosUser.forEach(renderInsumoUser);
     // Botão de adicionar novo insumo
     document.getElementById('addButton').onclick = function() {
-      window.location.href = '/Tela Editar Insumos/index.html?novo=1';
+      window.location.href = '';
     };
   </script>
 </body>
