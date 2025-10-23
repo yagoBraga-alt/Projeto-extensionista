@@ -1,0 +1,298 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #ffffff;
+  text-align: center;
+}
+
+/* Cabeçalho */
+header {
+  background-color: #1e3fa9;
+  color: white;
+  padding: 20px;
+  position: relative;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.logo {
+  background: white;
+  color: #1e3fa9;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 20px;
+  margin: 0 auto 10px auto;
+}
+
+.accessibility {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: #ffcc00;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* Conteúdo principal */
+.content {
+  padding: 30px 20px;
+}
+
+.mascot img {
+  width: 120px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.title {
+  font-size: 20px;
+  color: #1e3fa9;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 200;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #ffffff;
+  margin: 10% auto;
+  padding: 20px;
+  border: 2px solid #1e3fa9;
+  border-radius: 10px;
+  width: 300px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Modal de compras — ocupa largura maior */
+#modalCompras .modal-content {
+  width: 95vw !important;
+  max-width: 900px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+  text-align: left;
+}
+
+form label {
+  font-weight: bold;
+  color: #1e3fa9;
+}
+
+form input[type="text"],
+form select,
+form input[type="file"],
+form textarea {
+  border: 1.5px solid #1e3fa9;
+  border-radius: 8px;
+  padding: 8px;
+  font-size: 14px;
+  width: 100%;
+  outline: none;
+}
+
+form textarea {
+  resize: none;
+}
+
+/* Tabela dentro do modal */
+.tabela-compras-wrapper {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  overflow-x: auto;
+}
+
+.tabela-compras {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.tabela-compras th,
+.tabela-compras td {
+  border: 1px solid #1e3fa9;
+  padding: 6px;
+  text-align: center;
+}
+
+.tabela-compras th {
+  background: #ffcc33;
+  color: #1e3fa9;
+  font-weight: bold;
+}
+
+.tabela-compras input,
+.tabela-compras select {
+  width: 90%;
+  padding: 4px;
+  font-size: 13px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.adicionar-linha-btn {
+  margin: 8px auto 0 auto;
+  display: block;
+  background: #ffcc33;
+  color: #1e3fa9;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.adicionar-linha-btn:hover {
+  background: #f0b800;
+}
+
+.remover-linha-btn {
+  background: #ddd;
+  color: #1e3fa9;
+  border: none;
+  border-radius: 4px;
+  padding: 2px 5px;
+  margin: 0 2px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.remover-linha-btn:hover {
+  background: #bbb;
+}
+
+/* Botões */
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.modal-buttons button {
+  border: none;
+  border-radius: 10px;
+  padding: 10px 22px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+/* Botão Enviar */
+.enviar-btn {
+  background: #ffcc33;
+  color: #1e3fa9;
+}
+
+.enviar-btn:hover {
+  background: #f0b800;
+  transform: scale(1.05);
+}
+
+/* Botão Cancelar */
+.cancelar-btn {
+  background: #e0e0e0;
+  color: #333;
+}
+
+.cancelar-btn:hover {
+  background: #c9c9c9;
+  transform: scale(1.05);
+}
+
+
+.enviar-btn {
+  background-color: #ffcc33;
+  color: #1e3fa9;
+}
+
+.enviar-btn:hover {
+  background-color: #f0b800;
+}
+
+.close-btn {
+  color: #1e3fa9;
+  float: right;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: #ffcc33;
+}
+
+/* Botões da tela inicial */
+.button-container button {
+  background: #ffcc33;
+  border: none;
+  border-radius: 12px;
+  padding: 20px 40px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.button-container button:hover {
+  background: #f0b800;
+}
+
+.back {
+  margin-top: 30px;
+}
+
+.back button {
+  background: #ddd;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.back button:hover {
+  background: #bbb;
+}

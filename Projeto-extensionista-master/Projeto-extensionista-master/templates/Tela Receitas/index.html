@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Receitas</title>
+  <link rel="stylesheet" href="../../static/Tela Receitas/styles.css" />
+</head>
+<body>
+  <header>
+    <div class="logo">APAE</div>
+    <h1>Receitas</h1>
+    <div class="accessibility">☺︎</div>
+  </header>
+
+  <div class="content">
+    <div class="mascot">
+      <img src="../../static/img/logoBiscoitoDivertido.png" alt="Logo do biscoito"/>
+    </div>
+
+    <div class="title">Escolha sua receita</div>
+    <div class="subtitle">Selecione uma das opções abaixo</div>
+
+    <div class="menu menu-column">
+      <button id="baunilhaBtn">
+        <img src="../../static/img/biscoitos.png" alt="Biscoito Baunilha"/>
+        Biscoito Baunilha
+      </button>
+      <button id="chocolateBtn">
+        <img src="../../static/img/biscoitoChocolate.png" alt="Biscoito Chocolate"/>
+        Biscoito Chocolate
+      </button>
+      <button id="queijoBtn">
+        <img src="../../static/img/biscoitoQueijo.png" alt="Biscoito Queijo"/>
+        Biscoito Queijo
+      </button>
+      <button id="cadastrarReceitaBtn">Cadastrar Receita</button>
+
+      <div id="userRecipes"></div>
+    </div>
+
+    <!-- Modal de visualização de receita -->
+    <div id="recipeModal" class="modal">
+      <div class="modal-content">
+        <span class="close" id="modalClose">&times;</span>
+        <div id="modal-text">Receita aqui</div>
+      </div>
+    </div>
+
+    <!-- Modal de cadastro de receita -->
+    <div id="cadastrarReceitaModal" class="modal">
+      <div class="modal-content recipe-modal-content">
+        <span class="close" id="closeCadastrar">&times;</span>
+        <h2>Cadastrar Receita</h2>
+        <form id="formReceita">
+          <label for="nomeReceita">Nome da receita:</label>
+          <input type="text" id="nomeReceita" required/>
+          <label for="imagemReceita">Imagem:</label>
+          <input type="file" id="imagemReceita" accept="image/*"/>
+
+          <div class="tabela-receita-wrapper">
+            <table class="tabela-receita" id="tabelaReceita">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Qtd</th>
+                  <th>Referência</th>
+                  <th>Und Med. Ref</th>
+                  <th>Peso Cont Ref</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="receitaBody"></tbody>
+            </table>
+            <button type="button" class="adicionar-linha-btn" id="addReceitaLinhaBtn">Adicionar Linha</button>
+          </div>
+
+          <div class="modal-buttons">
+            <button type="button" class="cancelar-btn">Cancelar</button>
+            <button type="submit" class="enviar-btn">Enviar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="back">
+      <button onclick="window.history.back()">Voltar</button>
+    </div>
+  </div>
+
+  <script src="/receitaJs" defer></script>
+</body>
+</html>

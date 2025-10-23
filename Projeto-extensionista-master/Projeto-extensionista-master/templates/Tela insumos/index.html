@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gerenciar Insumos</title>
+  <link rel="stylesheet" href="../../static/Tela insumos/styles.css" />
+</head>
+<body>
+  <header>
+    <div class="logo">APAE</div>
+    <h1>Gerenciar Insumos</h1>
+    <div class="accessibility">☺︎</div>
+  </header>
+
+  <div class="content">
+    <div class="mascot">
+      <img src="../../static/img/logoBiscoitoDivertido.png" alt="Logo do biscoito" />
+    </div>
+
+    <div class="title">Adicione insumos e compras</div>
+    <div class="subtitle">Gerencie os ingredientes e compras necessárias para a produção</div>
+
+    <div class="button-container">
+      <button id="btnInsumo">Cadastrar Insumo</button>
+      <button id="btnCompras">Cadastrar Compras</button>
+    </div>
+
+    <!-- Modal Cadastrar Insumo -->
+    <div id="modalInsumo" class="modal">
+      <div class="modal-content">
+        <span class="close-btn" id="closeInsumo">&times;</span>
+        <h2>Cadastrar Insumo</h2>
+
+        <form id="formInsumo">
+          <label for="nomeInsumo">Nome do Insumo:</label>
+          <input type="text" id="nomeInsumo" name="nomeInsumo" required />
+
+          <label for="unidade">Unidade de Medida:</label>
+          <select id="unidade" name="unidade" required>
+            <option value="" disabled selected>Selecione</option>
+            <option value="kg">Kg</option>
+            <option value="ml">Ml</option>
+            <option value="g">Gramas</option>
+          </select>
+
+          <label for="imagemInsumo">Imagem do Insumo:</label>
+          <input type="file" id="imagemInsumo" name="imagemInsumo" accept="image/*" />
+
+          <label for="descricao">Descrição:</label>
+          <textarea id="descricao" name="descricao" rows="3" placeholder="Digite uma breve descrição..."></textarea>
+
+          <div class="modal-buttons">
+            <button type="button" class="cancelar-btn">Cancelar</button>
+            <button type="submit" class="enviar-btn">Enviar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+
+    <!-- Modal Cadastrar Compras -->
+    <div id="modalCompras" class="modal">
+      <div class="modal-content">
+        <span class="close-btn" id="closeCompras">&times;</span>
+        <h2>Cadastrar Compras</h2>
+
+        <form id="formCompras">
+          <label for="fornecedor">Fornecedor:</label>
+          <select id="fornecedor" name="fornecedor" required>
+            <option value="" disabled selected>Selecione</option>
+            <option value="Fornecedor A">Fornecedor A</option>
+            <option value="Fornecedor B">Fornecedor B</option>
+          </select>
+
+          <label for="notaFiscal">Nota Fiscal:</label>
+          <input type="text" id="notaFiscal" name="notaFiscal" required />
+
+          <label for="dataNF">Data NF:</label>
+          <input type="date" id="dataNF" name="dataNF" required />
+
+          <div class="tabela-compras-wrapper">
+            <table class="tabela-compras" id="tabelaCompras">
+              <thead>
+                <tr>
+                  <th>nome</th>
+                  <th>marca</th>
+                  <th>peso/cont</th>
+                  <th>preço uni</th>
+                  <th>validade</th>
+                  <th>qtd</th>
+                  <th>embalagem</th>
+                  <th>dimensões</th>
+                  <th>und medida</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="comprasBody"></tbody>
+            </table>
+            <button type="button" class="adicionar-linha-btn" id="addLinhaBtn">Adicionar Linha</button>
+          </div>
+
+          <label for="observacao">Observação:</label>
+          <textarea id="observacao" name="observacao" rows="3" placeholder="Digite uma observação..."></textarea>
+
+          <div class="modal-buttons">
+            <button type="button" class="cancelar-btn">Cancelar</button>
+            <button type="submit" class="enviar-btn">Enviar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="back">
+      <button onclick="window.location.href='{{ url_for('menu_page') }}'">Voltar</button>
+    </div>
+  </div>
+
+  <script>
+    // Função abrir/fechar modal
+    function openModal(id) {
+      document.getElementById(id).style.display = "block";
+    }
+    function closeModal(id) {
+      document.getElementById(id).style.display = "none";
+    }
+
+    // Eventos principais
+    document.getElementById('btnInsumo').onclick = () => openModal('modalInsumo');
+    document.getElementById('btnCompras').onclick = () => {
+      openModal('modalCompras');
+      inicializarTabelaCompras(3); // cria as linhas só ao abrir
+    };
+
+    document.getElementById('closeInsumo').onclick = () => closeModal('modalInsumo');
+    document.getElementById('closeCompras').onclick = () => closeModal('modalCompras');
+
+    // Fecha modal clicando fora
+    window.onclick = e => {
+      if (e.target.classList.contains('modal')) e.target.style.display = "none";
+    };
+
+    // Todos os botões "Cancelar" fecham qualquer modal aberto
+    document.querySelectorAll('.cancelar-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        closeModal('modalInsumo');
+        closeModal('modalCompras');
+      });
+    });
+
+    // Envio do formulário de insumo
+    document.getElementById('formInsumo').addEventListener('submit', e => {
+      e.preventDefault();
+      alert('Insumo cadastrado com sucesso!');
+      closeModal('modalInsumo');
+      e.target.reset();
+    });
+
+    // Função para criar uma linha na tabela de compras
+    function criarLinhaCompra() {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td><input type="text" name="nome[]" required></td>
+        <td><input type="text" name="marca[]" required></td>
+        <td><input type="text" name="peso[]" required></td>
+        <td><input type="number" name="preco[]" step="0.01" min="0" required></td>
+        <td><input type="date" name="validade[]" required></td>
+        <td><input type="number" name="qtd[]" min="1" required></td>
+        <td>
+          <select name="embalagem[]" required>
+            <option value="" disabled selected>Selecione</option>
+            <option value="Caixa">Caixa</option>
+            <option value="Pacote">Pacote</option>
+            <option value="Garrafa">Garrafa</option>
+          </select>
+        </td>
+        <td><input type="text" name="dimensoes[]" required></td>
+        <td>
+          <select name="unidade_medida[]" required>
+            <option value="" disabled selected>Selecione</option>
+            <option value="Kg">Kg</option>
+            <option value="g">Gramas</option>
+            <option value="ml">ml</option>
+          </select>
+        </td>
+        <td><button type="button" class="remover-linha-btn">&times;</button></td>
+      `;
+      row.querySelector(".remover-linha-btn").onclick = () => row.remove();
+      return row;
+    }
+
+    function inicializarTabelaCompras(qtd) {
+      const body = document.getElementById("comprasBody");
+      body.innerHTML = "";
+      for (let i = 0; i < qtd; i++) {
+        body.appendChild(criarLinhaCompra());
+      }
+    }
+
+    document.getElementById("addLinhaBtn").onclick = () => {
+      document.getElementById("comprasBody").appendChild(criarLinhaCompra());
+    };
+  </script>
+</body>
+</html>
